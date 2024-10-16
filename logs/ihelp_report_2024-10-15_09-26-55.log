@@ -1,0 +1,35 @@
+2024-10-15 09:26:58,019 - INFO - Browser Initiated
+2024-10-15 09:27:19,521 - INFO - Login Successful
+2024-10-15 09:28:34,768 - INFO - Auto Generated Incident Report for Sales Central:
+
+New Count: 0
+Assigned Count: 0
+Inprogress Count: 2
+Pending Count: 14
+
+
+
+Auto Generated Incident Report for OPS Central:
+
+New Count: 0
+Assigned Count: 0
+Inprogress Count: 0
+Pending Count: 2
+
+
+
+Auto Generated Incident Report for Partner Central:
+
+New Count: 0
+Assigned Count: 0
+Inprogress Count: 0
+Pending Count: 1
+
+
+Regards,
+Elumalai.P
+Production Support Engineer
+Piramal Capital & Housing Finance
+E: elumalai.p2@piramal.com
+2024-10-15 09:28:40,973 - INFO - Emails sent successfully!
+2024-10-15 09:28:42,081 - INFO - LOGGING OUT

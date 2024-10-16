@@ -1,0 +1,86 @@
+2024-09-18 12:59:35,808 - INFO - Browser Initiated
+2024-09-18 12:59:49,530 - INFO - Login Successful
+2024-09-18 13:00:46,115 - INFO - Auto Generated Incident Report for Sales Central:
+
+New Count: 7
+Assigned Count: 0
+Inprogress Count: 7
+Pending Count: 59
+
+
+Pending Incidents in Sales Central:
+854594         |Vendor dependency   
+854586         |Vendor dependency   
+854580         |Vendor dependency   
+854578         |Vendor dependency   
+854571         |Vendor dependency   
+854570         |Vendor dependency   
+854567         |Vendor dependency   
+854562         |Vendor dependency   
+854556         |Vendor dependency   
+854555         |Vendor dependency   
+854553         |Vendor dependency   
+854549         |Vendor dependency   
+854548         |Vendor dependency   
+854547         |Vendor dependency   
+854546         |Vendor dependency   
+854541         |Vendor dependency   
+854539         |Vendor dependency   
+854537         |Vendor dependency   
+854526         |Vendor dependency   
+854525         |Vendor dependency   
+854519         |Vendor dependency   
+854517         |Vendor dependency   
+854511         |Vendor dependency   
+854505         |Vendor dependency   
+854504         |Vendor dependency   
+854495         |Vendor dependency   
+854484         |Vendor dependency   
+854483         |Vendor dependency   
+854475         |Vendor dependency   
+854472         |Pending with user   
+854471         |Vendor dependency   
+854469         |Vendor dependency   
+854465         |Vendor dependency   
+854450         |Vendor dependency   
+854447         |Vendor dependency   
+854441         |Vendor dependency   
+854409         |Vendor dependency   
+854377         |Vendor dependency   
+854376         |Vendor dependency   
+854362         |Vendor dependency   
+854357         |Vendor dependency   
+854325         |Pending with user   
+854264         |Vendor dependency   
+854245         |Vendor dependency   
+854229         |Vendor dependency   
+854186         |Pending with user   
+854145         |Vendor dependency   
+854107         |Pending with SFDC team
+854097         |Pending with user   
+854091         |Waiting for Approval
+854077         |Vendor dependency   
+853999         |Pending with user   
+853899         |Pending with user   
+853864         |Pending with user   
+853780         |Pending with user   
+853665         |Pending with user   
+853555         |Waiting for Approval
+853458         |Pending with dev team
+852704         |Vendor dependency   
+851792         |Waiting for Approval
+
+
+Auto Generated Incident Report for OPS Central:
+
+New Count: 0
+Assigned Count: 0
+Inprogress Count: 1
+Pending Count: 0
+
+
+Pending Incidents in OPS Central:
+No pending incidents found.
+
+2024-09-18 13:00:52,072 - INFO - Emails sent successfully!
+2024-09-18 13:00:53,407 - INFO - LOGGING OUT

@@ -8,6 +8,7 @@ Created on Mon Sep  2 21:12:48 2024
 
 import configparser
 from selenium.webdriver.chrome.service import Service
+import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -22,7 +23,16 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
+# Generate log filename with timestamp
+log_filename = datetime.now().strftime("logs/ihelp_report_%Y-%m-%d_%H-%M-%S.log")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    handlers=[logging.FileHandler(log_filename), logging.StreamHandler()])
 logger = logging.getLogger(__name__)
 
 class IhelpReport:
@@ -50,6 +60,8 @@ class IhelpReport:
         options.add_argument("--disable-gpu")
         options.add_argument("--window-size=1920,1080")
         options.add_argument("--no-sandbox")
+        
+        
         options.add_argument("--disable-dev-shm-usage")
 
          # Initialize the WebDriver with the service and options
@@ -104,7 +116,7 @@ class IhelpReport:
             self.driver.maximize_window()
 
             self.driver.find_element(By.ID, "txtLogin").send_keys("elumalai.p2")
-            self.driver.find_element(By.ID, "txtPassword").send_keys("Seven@27")
+            self.driver.find_element(By.ID, "txtPassword").send_keys("Seven@23")
             self.driver.find_element(By.ID, "butSubmit").click()
             logger.info("Login Successful")
 
@@ -121,12 +133,22 @@ class IhelpReport:
             # Get reports for both workgroups
             sales_central_report = self.get_workgroup_report("Sales Central")
             ops_central_report = self.get_workgroup_report("OPS Central")
+            Partner_central_report= self.get_workgroup_report("Partner Central")
             
-            body = f"{sales_central_report}\n\n" \
-                   f"{ops_central_report}"
+            body = (
+    f"{sales_central_report}\n"
+    f"{ops_central_report}\n"
+    f"{Partner_central_report}"
+    "Regards,\n"
+    "Elumalai.P\n"
+    "Production Support Engineer\n"
+    "Piramal Capital & Housing Finance\n"
+    "E: elumalai.p2@piramal.com"
+)
+
             
             logger.info(body)
-            self.send_email("Ihelp Sales and Ops Reports", body)
+            self.send_email("Ihelp SC-OC-PC Incident count", body)
 
         finally:
             self.logout()
@@ -138,50 +160,50 @@ class IhelpReport:
 
         if workgroup.lower() == "sales central":
             option = self.driver.find_element(By.XPATH, "//ul[@class='select2-results__options']//li[text()='Sales Central']")
-        else:
+        elif workgroup.lower() == "ops central" :
             option = self.driver.find_element(By.XPATH, "//ul[@class='select2-results__options']//li[text()='OPS Central']")
-
+        elif workgroup.lower() == "partner central" :
+            option = self.driver.find_element(By.XPATH,"//ul[@class='select2-results__options']//li[text()='Partner Central']")
         option.click()
         self.driver.find_element(By.XPATH, "(//input[@value='Submit'])[1]").click()
         
 
         counts = self.take_count()
       
-        pending_report = self.get_pending_report(workgroup)
+        #pending_report = self.get_pending_report(workgroup)
 
         body = f"Auto Generated Incident Report for {workgroup}:\n\n" \
-               f"{counts}\n" \
-               f"{pending_report}"
+               f"{counts}\n" 
 
         return body
 
     def take_count(self):
-        self.wait_for_element(self.to_load_xapth,5)
+        self.wait_for_element(self.to_load_xapth,10)
         pending_count = new_count = assigned_count = inprogress_count = 0
 
         try:
-            self.wait_for_element(self.new_count_xpath,5)
+            self.wait_for_element(self.new_count_xpath,10)
             new_counts = self.driver.find_element(By.XPATH, self.new_count_xpath)
             new_count = int(new_counts.text) if new_counts.text.isdigit() else 0
         except (NoSuchElementException, TimeoutException):
             new_count = 0
 
         try:
-            self.wait_for_element(self.inprogress_count_xpath,5)
+            self.wait_for_element(self.inprogress_count_xpath,10)
             inprogress = self.driver.find_element(By.XPATH, self.inprogress_count_xpath)
             inprogress_count = int(inprogress.text.strip()) if inprogress.text.strip().isdigit() else 0
         except (NoSuchElementException, TimeoutException):
             inprogress_count = 0
 
         try:
-            self.wait_for_element(self.pending_count_xpath,5)
+            self.wait_for_element(self.pending_count_xpath,10)
             pending = self.driver.find_element(By.XPATH, self.pending_count_xpath)
             pending_count = int(pending.text.strip()) if pending.text.strip().isdigit() else 0
         except (NoSuchElementException, TimeoutException):
             pending_count = 0
 
         try:
-            self.wait_for_element(self.assigned_count_xpath,5)
+            self.wait_for_element(self.assigned_count_xpath,10)
             assigned = self.driver.find_element(By.XPATH, self.assigned_count_xpath)
             assigned_count = int(assigned.text.strip()) if assigned.text.strip().isdigit() else 0
         except (NoSuchElementException, TimeoutException):
@@ -221,7 +243,7 @@ class IhelpReport:
             for row in rows:
                 cells = row.find_elements(By.TAG_NAME, "td")
                 if len(cells) > 2:
-                    pending_reason = cells[11].text.strip()  # Get and trim pending reason
+                    pending_reason = cells[8].text.strip()  # Get and trim pending reason
                     incident_id = cells[1].text.strip()      # Get and trim incident ID
                     report += f"{incident_id:<15}|{pending_reason:<20}\n"
     
@@ -242,6 +264,7 @@ class IhelpReport:
     def logout(self):
         self.driver.find_element(By.XPATH,'//div[@class="profile dropdown"]').click()
         self.driver.find_element(By.XPATH,'//a[@id="hrefLogout"]').click()
+        logger.info("LOGGING OUT")
 if __name__ == "__main__":
     ihelp_report = IhelpReport()
     ihelp_report.login_ihelp("https://mihelp.piramal.com/formLogin/#!")
