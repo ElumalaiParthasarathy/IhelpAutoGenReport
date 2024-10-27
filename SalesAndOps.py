@@ -115,8 +115,8 @@ class IhelpReport:
             self.driver.get(website)
             self.driver.maximize_window()
 
-            self.driver.find_element(By.ID, "txtLogin").send_keys("elumalai.p2")
-            self.driver.find_element(By.ID, "txtPassword").send_keys("Seven@23")
+            self.driver.find_element(By.ID, "txtLogin").send_keys(”logid")
+            self.driver.find_element(By.ID, "txtPassword").send_keys("password here")
             self.driver.find_element(By.ID, "butSubmit").click()
             logger.info("Login Successful")
 
@@ -267,5 +267,5 @@ class IhelpReport:
         logger.info("LOGGING OUT")
 if __name__ == "__main__":
     ihelp_report = IhelpReport()
-    ihelp_report.login_ihelp("https://mihelp.piramal.com/formLogin/#!")
+    ihelp_report.login_ihelp("link here")
 
